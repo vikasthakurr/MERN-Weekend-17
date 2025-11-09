@@ -1,0 +1,386 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background: #f4f4f4;
+    color: #333;
+}
+
+.container {
+    width: 80%;
+    margin: auto;
+    overflow: hidden;
+}
+
+/* Header */
+header {
+    background: #333;
+    color: #fff;
+    padding-top: 30px;
+    min-height: 70px;
+    border-bottom: #77aaff 3px solid;
+}
+
+header a {
+    color: #fff;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 16px;
+}
+
+header ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    float: right;
+}
+
+header li {
+    display: inline;
+    padding: 0 20px 0 20px;
+}
+
+header #branding {
+    float: left;
+}
+
+header #branding h1 {
+    margin: 0;
+}
+
+header .highlight, header .current a {
+    color: #77aaff;
+    font-weight: bold;
+}
+
+header a:hover {
+    color: #ccc;
+    font-weight: bold;
+}
+
+/* Showcase */
+#showcase {
+    min-height: 400px;
+    background: url('../img/showcase.jpg') no-repeat 0 -400px;
+    text-align: center;
+    color: #fff;
+}
+
+#showcase h1 {
+    margin-top: 100px;
+    font-size: 55px;
+    margin-bottom: 10px;
+}
+
+#showcase p {
+    font-size: 20px;
+}
+
+/* Newsletter */
+#newsletter {
+    padding: 15px;
+    color: #fff;
+    background: #333;
+}
+
+#newsletter h1 {
+    float: left;
+}
+
+#newsletter form {
+    float: right;
+    margin-top: 15px;
+}
+
+#newsletter input[type="email"] {
+    padding: 4px;
+    height: 25px;
+    width: 250px;
+}
+
+/* Boxes */
+#boxes {
+    margin-top: 20px;
+}
+
+#boxes .box {
+    float: left;
+    width: 30%;
+    padding: 10px;
+    text-align: center;
+}
+
+#boxes .box img {
+    width: 90px;
+}
+
+/* Sidebar */
+aside#sidebar {
+    float: right;
+    width: 30%;
+    margin-top: 10px;
+}
+
+aside#sidebar .quote input, aside#sidebar .quote textarea {
+    width: 90%;
+    padding: 5px;
+}
+
+/* Main-col */
+article#main-col {
+    float: left;
+    width: 65%;
+}
+
+/* Services */
+ul#services li {
+    list-style: none;
+    padding: 20px;
+    border: #ccc solid 1px;
+    margin-bottom: 5px;
+    background: #e6e6e6;
+}
+
+/* Footer */
+footer {
+    padding: 20px;
+    margin-top: 20px;
+    color: #fff;
+    background-color: #333;
+    text-align: center;
+}
+
+/* Media Queries */
+@media(max-width: 768px){
+    header #branding,
+    header nav,
+    header nav li,
+    #newsletter h1,
+    #newsletter form,
+    #boxes .box,
+    article#main-col,
+    aside#sidebar {
+        float: none;
+        text-align: center;
+        width: 100%;
+    }
+
+    header {
+        padding-bottom: 20px;
+    }
+
+    #showcase h1 {
+        margin-top: 40px;
+    }
+
+    #newsletter button, .quote button {
+        display: block;
+        width: 100%;
+    }
+
+    #newsletter form input[type="email"], .quote input, .quote textarea {
+        width: 100%;
+        margin-bottom: 5px;
+    }
+}
+
+.dummy-class-1 {
+    color: #ff0000;
+}
+
+.dummy-class-2 {
+    background-color: #00ff00;
+}
+
+.dummy-class-3 {
+    border: 1px solid #0000ff;
+}
+
+.dummy-class-4 {
+    font-size: 14px;
+}
+
+.dummy-class-5 {
+    margin: 10px;
+}
+
+.dummy-class-6 {
+    padding: 10px;
+}
+
+.dummy-class-7 {
+    text-align: left;
+}
+
+.dummy-class-8 {
+    font-weight: bold;
+}
+
+.dummy-class-9 {
+    text-decoration: underline;
+}
+
+.dummy-class-10 {
+    display: block;
+}
+
+.dummy-class-11 {
+    color: #ff00ff;
+}
+
+.dummy-class-12 {
+    background-color: #ffff00;
+}
+
+.dummy-class-13 {
+    border: 2px dashed #00ffff;
+}
+
+.dummy-class-14 {
+    font-size: 18px;
+}
+
+.dummy-class-15 {
+    margin: 20px;
+}
+
+.dummy-class-16 {
+    padding: 20px;
+}
+
+.dummy-class-17 {
+    text-align: right;
+}
+
+.dummy-class-18 {
+    font-style: italic;
+}
+
+.dummy-class-19 {
+    text-transform: uppercase;
+}
+
+.dummy-class-20 {
+    display: inline-block;
+}
+
+.dummy-class-21 {
+    color: #f0f0f0;
+}
+
+.dummy-class-22 {
+    background-color: #0f0f0f;
+}
+
+.dummy-class-23 {
+    border: 3px dotted #f0f0f0;
+}
+
+.dummy-class-24 {
+    font-size: 22px;
+}
+
+.dummy-class-25 {
+    margin: 30px;
+}
+
+.dummy-class-26 {
+    padding: 30px;
+}
+
+.dummy-class-27 {
+    text-align: justify;
+}
+
+.dummy-class-28 {
+    line-height: 1.2;
+}
+
+.dummy-class-29 {
+    letter-spacing: 1px;
+}
+
+.dummy-class-30 {
+    word-spacing: 2px;
+}
+
+.dummy-class-31 {
+    color: #123456;
+}
+
+.dummy-class-32 {
+    background-color: #654321;
+}
+
+.dummy-class-33 {
+    border: 4px double #abcdef;
+}
+
+.dummy-class-34 {
+    font-size: 26px;
+}
+
+.dummy-class-35 {
+    margin: 40px;
+}
+
+.dummy-class-36 {
+    padding: 40px;
+}
+
+.dummy-class-37 {
+    white-space: nowrap;
+}
+
+.dummy-class-38 {
+    overflow: scroll;
+}
+
+.dummy-class-39 {
+    visibility: hidden;
+}
+
+.dummy-class-40 {
+    opacity: 0.5;
+}
+.dummy-class-41 {
+    color: #654321;
+}
+
+.dummy-class-42 {
+    background-color: #123456;
+}
+
+.dummy-class-43 {
+    border: 5px groove #fedcba;
+}
+
+.dummy-class-44 {
+    font-size: 30px;
+}
+
+.dummy-class-45 {
+    margin: 50px;
+}
+
+.dummy-class-46 {
+    padding: 50px;
+}
+
+.dummy-class-47 {
+    white-space: pre;
+}
+
+.dummy-class-48 {
+    overflow: auto;
+}
+
+.dummy-class-49 {
+    visibility: visible;
+}
+
+.dummy-class-50 {
+    opacity: 0.8;
+}

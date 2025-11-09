@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ARIA Accessability</title>
+  </head>
+  <body>
+    <h1>ARIA Accessability</h1>
+
+    <!--
+      WAI-ARIA (Web Accessibility Initiative - Accessible Rich Internet Applications) is a set of attributes that can be added to HTML elements to improve the accessibility of web content and web applications. It doesn't change the functionality or appearance of an element, but it provides extra information to assistive technologies (like screen readers) so they can better understand and interact with the page.
+
+      ARIA is especially useful for making dynamic content and custom UI components (like sliders, menus, and complex widgets) accessible.
+
+      The three main components of ARIA are:
+      1. Roles: Define what an element is or does. For example, role="navigation", role="button", role="alert".
+      2. Properties: Define characteristics or relationships of an element. For example, aria-label="Close", aria-describedby="id_of_description".
+      3. States: Define the current conditions or states of an element. For example, aria-expanded="true", aria-hidden="false", aria-disabled="true".
+    -->
+
+    <h2>What is ARIA?</h2>
+    <p>
+      ARIA stands for Accessible Rich Internet Applications. It's a set of
+      attributes you can add to your HTML to make your web pages more
+      accessible to people with disabilities, especially when you're using
+      complex JavaScript widgets or dynamic content.
+    </p>
+
+    <h2>Example: A Custom Button</h2>
+    <p>
+      Sometimes, you might create a "button" using a `<div>` or a `<span>`
+      element for styling reasons. A screen reader won't know that this is a
+      button by default. ARIA can fix this.
+    </p>
+
+    <!-- 
+      This is a div that is styled to look like a button. 
+      - A person using a screen reader won't know it's a button.
+      - It's not focusable with the keyboard (e.g., using the Tab key).
+      - It can't be activated with the Enter or Space key.
+    -->
+    <div
+      style="
+        border: 1px solid black;
+        padding: 10px;
+        display: inline-block;
+        cursor: pointer;
+      "
+    >
+      I'm a div, not an accessible button
+    </div>
+
+    <!-- 
+      Here's the same div made accessible with ARIA and other HTML attributes.
+      - role="button": Tells the screen reader that this element is a button.
+      - tabindex="0": Makes the element focusable with the keyboard.
+      - aria-label: Provides an accessible name for the button, which is read by the screen reader.
+    -->
+    <div
+      role="button"
+      tabindex="0"
+      aria-label="Accessible Button made from a div"
+      style="
+        border: 1px solid black;
+        padding: 10px;
+        display: inline-block;
+        cursor: pointer;
+        margin-top: 10px;
+      "
+      onclick="alert('Accessible button clicked!')"
+      onkeydown="if(event.key === 'Enter' || event.key === ' ') { this.click(); }"
+    >
+      I'm a div, but now I'm an accessible button
+    </div>
+
+    <!--
+      IMPORTANT: The First Rule of ARIA
+      If you can use a native HTML element (like <button>, <nav>, <input>), do it! 
+      Native elements have accessibility built-in for free. Only use ARIA when you have to, for custom components that don't have a native HTML equivalent.
+    -->
+    <h2>The Best Button is a Real Button</h2>
+    <button onclick="alert('Real button clicked!')">
+      I'm a real button, and I'm accessible by default
+    </button>

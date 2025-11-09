@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Colors</title>
+    <style>
+        /* CSS Color Notes */
+
+        /* 
+            Colors in CSS can be specified in several ways:
+
+            1. Color Names:
+               - There are 140+ predefined color names.
+               - Examples: red, green, blue, lightgray, etc.
+        */
+        .color-name {
+            color: red;
+        }
+
+        /*
+            2. RGB (Red, Green, Blue):
+               - Specifies a color using a combination of red, green, and blue values.
+               - Each value ranges from 0 to 255.
+               - Syntax: rgb(red, green, blue)
+        */
+        .rgb-color {
+            color: rgb(255, 0, 0); /* Red */
+        }
+
+        /*
+            3. RGBA (Red, Green, Blue, Alpha):
+               - An extension of RGB with an alpha channel for opacity.
+               - Alpha value ranges from 0.0 (fully transparent) to 1.0 (fully opaque).
+               - Syntax: rgba(red, green, blue, alpha)
+        */
+        .rgba-color {
+            color: rgba(255, 0, 0, 0.5); /* Semi-transparent red */
+        }
+
+        /*
+            4. HEX (Hexadecimal):
+               - A six-digit hexadecimal number representing RGB values.
+               - The first two digits represent red, the next two green, and the last two blue.
+               - Syntax: #RRGGBB
+               - A shorthand three-digit version is also available if each pair of digits is the same.
+               - Syntax: #RGB
+        */
+        .hex-color {
+            color: #FF0000; /* Red */
+        }
+
+        .hex-shorthand-color {
+            color: #F00; /* Red */
+        }
+
+        /*
+            5. HSL (Hue, Saturation, Lightness):
+               - A cylindrical-coordinate representation of colors.
+               - Hue is a degree on the color wheel (0-360). 0 is red, 120 is green, 240 is blue.
+               - Saturation is a percentage (0% is a shade of gray, 100% is the full color).
+               - Lightness is a percentage (0% is black, 50% is normal, 100% is white).
+               - Syntax: hsl(hue, saturation, lightness)
+        */
+        .hsl-color {
+            color: hsl(0, 100%, 50%); /* Red */
+        }
+
+        /*
+            6. HSLA (Hue, Saturation, Lightness, Alpha):
+               - An extension of HSL with an alpha channel for opacity.
+               - Alpha value ranges from 0.0 (fully transparent) to 1.0 (fully opaque).
+               - Syntax: hsla(hue, saturation, lightness, alpha)
+        */
+        .hsla-color {
+            color: hsla(0, 100%, 50%, 0.5); /* Semi-transparent red */
+        }
+
+        /*
+            Applying Colors:
+
+            - `color`: Sets the color of the text.
+            - `background-color`: Sets the background color of an element.
+        */
+
+        body {
+            font-family: sans-serif;
+        }
+
+        .text-example {
+            color: blue;
+        }
+
+        .background-example {
+            background-color: lightgray;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>CSS Color Examples</h1>
+
+    <p class="color-name">This text is styled with a color name (red).</p>
+    <p class="rgb-color">This text is styled with an RGB color (red).</p>
+    <p class="rgba-color">This text is styled with an RGBA color (semi-transparent red).</p>
+    <p class="hex-color">This text is styled with a HEX color (red).</p>
+    <p class="hex-shorthand-color">This text is styled with a shorthand HEX color (red).</p>
+    <p class="hsl-color">This text is styled with an HSL color (red).</p>
+    <p class="hsla-color">This text is styled with an HSLA color (semi-transparent red).</p>
+
+    <div class="background-example">
+        <p class="text-example">This paragraph has a blue text color and is inside a div with a lightgray background.</p>
+    </div>
+
+</body>
+</html>

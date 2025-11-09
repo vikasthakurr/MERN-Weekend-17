@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      /* Universal Selector: Selects all elements on the page. */
+      * {
+        margin: 0;
+      }
+      /* Type Selector (Element Selector): Selects all HTML elements of the specified type (e.g., all <p> tags). */
+      p {
+        color: red;
+      }
+      /* Type Selector (Element Selector): Selects all HTML elements of the specified type (e.g., all <span> tags). */
+      span {
+        color: green;
+      }
+      /* ID Selector: Selects a single HTML element with a specific 'id' attribute. IDs must be unique within a document. */
+      #para {
+        color: red;
+      }
+      /* Class Selector: Selects all HTML elements that have the specified 'class' attribute. Multiple elements can share the same class. */
+      .fashion {
+        color: blueviolet;
+        font-size: 34px;
+        font-style: italic;
+      }
+      /* Pseudo-class Selector: Selects elements based on a special state, like ':hover' for mouse over, or ':nth-child()' for elements based on their position among siblings. */
+      /* 
+      p:nth-child(even) {
+        color: red;
+      } */
+
+      /* Pseudo-element Selector: Selects a part of an element that is not directly represented by the HTML, like '::before' to insert content before an element, or '::marker' for list item markers. */
+      /* li::marker {
+        color: red;
+      } */
+      /* ID Selector: Selects a single HTML element with a specific 'id' attribute. IDs must be unique within a document. */
+      #heading {
+        color: red;
+      }
+      /* Pseudo-class Selector: Selects the element with id="heading" when the user's mouse pointer is over it. */
+      #heading:hover {
+        color: green;
+        font-style: italic;
+      }
+      /* Pseudo-element Selector: Inserts generated content before the actual content of every <h1> element. */
+      h1::before {
+        content: " ";
+      }
+      /* Pseudo-element Selector: Inserts generated content after the actual content of every <h1> element. */
+      h1::after {
+        content: " kumar thakur";
+      }
+      /* Pseudo-element Selector: Selects the placeholder text of an <input> or <textarea> element. */
+      input::placeholder {
+        color: red;
+      }
+      /* Attribute Selector: Selects HTML elements with a specific attribute and value (e.g., all <input> elements with type="text"). */
+      input[type="text"] {
+        color: rgb(255, 255, 255);
+      }
+      /* Type Selector (Element Selector): Selects all HTML elements of the specified type (e.g., all <h1> tags). */
+      h1 {
+        color: #333;
+        /* color: rebeccapurple; */
+      }
+    </style>
+  </head>
+  <body>
+    <input type="text" name="" id="" placeholder="enter name" />
+    <!-- <h1 class="fashion">vikas</h1>
+    <p class="fashion">hte</p>
+    <p id="para">vikas</p>
+    <h3>this</h3>
+    <span>this is span</span>
+    <h1 class="fashion">this</h1> -->
+
+    <!-- <p>item-1</p>
+    <p>item-2</p>
+    <p>item-3</p>
+    <p>item-4</p> -->
+    <!-- <div>
+      <p>this is first</p>
+      <p>this second p</p>
+    </div> -->
+
+    <!-- <h1 id="heading">this is example</h1>
+
+    <ul>
+      <li>item-1</li>
+      <li>item-2</li>
+    </ul> -->
+
+    <h1>vikas</h1>
+  </body>
+</html>

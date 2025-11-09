@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- The <title> element specifies a title for the HTML page (which is shown in the browser's title bar or in the page's tab) -->
+    <title>Document</title>
+  </head>
+  <!-- The <body> element defines the document's body, and is a container for all the visible contents, such as headings, paragraphs, images, hyperlinks, tables, and lists. -->
+  <body>
+    <!-- The <form> element is used to create an HTML form for user input. -->
+    <!-- The "action" attribute specifies where to send the form-data when a form is submitted. -->
+    <!-- The "method" attribute specifies the HTTP method to be used when submitting the form data. -->
+    <!--
+      GET vs POST methods:
+      GET:
+      - Appends form-data into the URL in name/value pairs.
+      - The length of a URL is limited (about 3000 characters).
+      - Never use GET to send sensitive data! (will be visible in the URL)
+      - Useful for form submissions where a user wants to bookmark the result.
+      - GET is better for non-secure data, like query strings in Google.
+
+      POST:
+      - Appends form-data inside the body of the HTTP request (the submitted form-data is not shown in the URL).
+      - POST has no size limitations, and can be used to send large amounts of data.
+      - Form submissions with POST cannot be bookmarked.
+      - POST is a little safer than GET because the parameters are not stored in browser history or in web server logs.
+    -->
+    <form action="table.html" method="post">
+      <!-- The <input> element specifies an input field where the user can enter data. -->
+      <!-- type="text" creates a single-line text input field. -->
+      <input
+        type="text"
+        name="fullname"
+        id=""
+        placeholder="enter your full name"
+      />
+      <br /><br />
+
+      <!-- type="password" defines a password field. The characters are masked. -->
+      <input type="password" name="password" placeholder="Password" />
+      <br /><br />
+
+      <!-- type="email" is used for input fields that should contain an e-mail address. -->
+      <input type="email" name="email" placeholder="Email" />
+      <br /><br />
+
+      <!-- type="number" defines a numeric input field. -->
+      <input
+        type="number"
+        name="quantity"
+        placeholder="Number"
+        min="1"
+        max="10"
+      />
+      <br /><br />
+
+      <!-- type="date" is used for input fields that should contain a date. -->
+      <input type="date" name="bday" />
+      <br /><br />
+
+      <!-- type="radio" defines a radio button. Radio buttons let a user select ONLY ONE of a limited number of choices. -->
+      <p>Please select your gender:</p>
+      <input type="radio" id="male" name="gender" value="male" />
+      <label for="male">Male</label><br />
+      <input type="radio" id="female" name="gender" value="female" />
+      <label for="female">Female</label><br />
+      <input type="radio" id="other" name="gender" value="other" />
+      <label for="other">Other</label>
+      <br /><br />
+
+      <!-- type="checkbox" defines a checkbox. Checkboxes let a user select ZERO or MORE options of a limited number of choices. -->
+      <p>Please select your favorite subjects:</p>
+      <input type="checkbox" id="math" name="subject" value="Math" />
+      <label for="math">Math</label><br />
+      <input type="checkbox" id="science" name="subject" value="Science" />
+      <label for="science">Science</label><br />
+      <input type="checkbox" id="history" name="subject" value="History" />
+      <label for="history">History</label>
+      <br /><br />
+
+      <!-- The <textarea> element defines a multi-line input field (a text area). -->
+      <textarea
+        name="message"
+        rows="5"
+        cols="30"
+        placeholder="Your message"
+      ></textarea>
+      <br /><br />
+
+      <!-- The <select> element is used to create a drop-down list. -->
+      <label for="cars">Choose a car:</label>
+      <select id="cars" name="cars">
+        <option value="volvo">Volvo</option>
+        <option value="saab">Saab</option>
+        <option value="fiat">Fiat</option>
+        <option value="audi">Audi</option>
+      </select>
+      <br /><br />
+
+      <!-- type="submit" defines a button for submitting the form data to a form-handler. -->
+      <input type="submit" value="submit" />
+
+      <!-- type="reset" defines a reset button that will reset all form values to their default values. -->
+      <input type="reset" value="Reset" />
+    </form>
+  </body>
+</html>

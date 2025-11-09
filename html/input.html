@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!-- The input element is the most used form element. An input field can be displayed in many ways, depending on the type attribute. -->
+
+    <!-- The type="text" defines a single-line text input field. The placeholder attribute specifies a short hint that describes the expected value of an input field. The required attribute specifies that an input field must be filled out before submitting the form. -->
+    <input type="text" name="" id="" placeholder="enter your name" required />
+    <br />
+    <br />
+    <!-- The type="number" defines a numeric input field. -->
+    <input type="number" name="" id="" placeholder="enter age" />
+    <br /><br />
+    <!-- The type="email" defines a field for an e-mail address. The input value is automatically validated to ensure it is a properly formatted e-mail address. -->
+    <input type="email" name="" id="" placeholder="enter email" />
+    <br /><br />
+    <!-- The type="password" defines a password field. The characters in a password field are masked (shown as asterisks or circles). -->
+    <input type="password" name="" id="" placeholder="enter password" />
+    <br /><br />
+    <!-- The type="color" is used for input fields that should contain a color. -->
+    <input type="color" name="" id="" />
+    <br /><br />
+    <!-- The type="file" defines a file-select field and a "Browse" button for file uploads. -->
+    <input type="file" name="" id="" />
+    <br /><br />
+    <!-- The type="date" is used for input fields that should contain a date. -->
+    <input type="date" name="" id="" />
+    <br /><br />
+    <!-- The type="datetime-local" specifies a date and time input field, with no time zone. -->
+    <input type="datetime-local" name="" id="" />
+    <br /><br />
+    <!-- The type="month" allows the user to select a month and year. -->
+    <input type="month" name="" id="" />
+    <br /><br />
+    <!-- The type="week" allows the user to select a week and year. -->
+    <input type="week" name="" id="" />
+    <br /><br />
+    <!-- The type="time" allows the user to select a time (no time zone). -->
+    <input type="time" name="" id="" />
+    <br /><br />
+    <!-- The type="range" defines a control for entering a number whose exact value is not important (like a slider). -->
+    <input type="range" name="" id="" />
+    <br /><br />
+    <!-- The type="radio" defines a radio button. Radio buttons are used to let a user select ONE of a limited number of choices. -->
+    <input type="radio" name="gender" value="male" /> male
+    <input type="radio" name="gender" value="female" /> female <br /><br />
+    <!-- The type="checkbox" defines a checkbox. Checkboxes let a user select ZERO or MORE options of a limited number of choices. -->
+    <input type="checkbox" name="" id="" /> agree to term <br /><br />
+    <!-- The type="url" is used for input fields that should contain a URL address. -->
+    <input type="url" name="" id="" placeholder="enter url" />
+    <br /><br />
+    <!-- The type="search" is used for search fields. -->
+    <input type="search" name="" id="" placeholder="search" />
+    <br /><br />
+    <!-- The type="tel" is used for input fields that should contain a telephone number. -->
+    <input type="tel" name="" id="" placeholder="enter telephone" />
+    <br /><br />
+    <!-- The type="hidden" defines a hidden input field (not visible to a user). A hidden field lets web developers include data that cannot be seen or modified by users when a form is submitted. -->
+    <input type="hidden" name="custId" value="3487" />
+
+    <!-- The textarea element defines a multi-line text input control. -->
+    <textarea name="" id=""></textarea>
+    <br /><br />
+
+    <!-- The select element defines a drop-down list. -->
+    <select name="cars" id="cars">
+      <!-- The option element defines an option that can be selected. -->
+      <option value="volvo">Volvo</option>
+      <option value="saab">Saab</option>
+      <!-- The optgroup tag is used to group related options in a <select> element (drop-down list). -->
+      <optgroup label="German Cars">
+        <option value="mercedes">Mercedes</option>
+        <option value="audi">Audi</option>
+      </optgroup>
+    </select>
+    <br /><br />
+    <!-- The type="submit" defines a button for submitting the form data to a form-handler. -->
+    <input type="submit" value="submit" />
+    <br /><br />
+    <!-- The type="reset" defines a reset button that will reset all form values to their default values. -->
+    <input type="reset" value="reset" />
+    <br /><br />
+    <!-- The type="button" defines a clickable button. -->
+    <input type="button" value="Click Me" onclick="alert('Hello World!')" />
+    <br /><br />
+    <!-- The type="image" defines an image as a submit button. -->
+    <input
+      type="image"
+      src="img_submit.gif"
+      alt="Submit"
+      width="48"
+      height="48"
+    />
+  </body>
+</html>
