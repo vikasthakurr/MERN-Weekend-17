@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <!-- <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      .container {
+        width: 900px;
+        height: 700px;
+        background-color: bisque;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        justify-items: stretch;
+        align-items: stretch;
+        /* grid-row-gap: 5px;
+        grid-column-gap: 5px; */
+        gap: 5px;
+      }
+      .box-1 {
+        background-color: red;
+        grid-column: 1/4;
+      }
+      .box-2 {
+        background-color: yellow;
+        grid-row: 2/4;
+      }
+      .box-3 {
+        background-color: green;
+      }
+      .box-4 {
+        background-color: blue;
+      }
+      .box-5 {
+        background-color: greenyellow;
+      }
+      .box-6 {
+        background-color: aquamarine;
+      }
+      .box {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    </style> -->
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      .container {
+        width: 900px;
+        height: 800px;
+        display: grid;
+        gap: 10px;
+        grid-template-areas: "header header header" "sidebar content-1 content-1" "sidebar content-2 content-3" "footer footer footer";
+      }
+      .header {
+        background-color: greenyellow;
+        grid-area: header;
+      }
+      .sidebar {
+        background-color: yellow;
+        grid-area: sidebar;
+      }
+      .content-1 {
+        background-color: red;
+        grid-area: content-1;
+      }
+      .content-2 {
+        background-color: aquamarine;
+        grid-area: content-2;
+      }
+      .content-3 {
+        background-color: blue;
+        grid-area: content-3;
+      }
+      .footer {
+        background-color: hotpink;
+        grid-area: footer;
+      }
+      .box {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 1px solid #000;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- <div class="container">
+      <div class="box box-1">box-1</div>
+      <div class="box box-2">box-2</div>
+      <div class="box box-3">box-3</div>
+      <div class="box box-4">box-4</div>
+      <div class="box box-5">box-5</div>
+      <div class="box box-6">box-6</div>
+    </div> -->
+    <div class="container">
+      <div class="box header">Header</div>
+      <div class="box sidebar">Sidebar</div>
+      <div class="box content-1">content-1</div>
+      <div class="box content-2">content-2</div>
+      <div class="box content-3">content-3</div>
+      <div class="box footer">footer</div>
+    </div>
+  </body>
+</html>
