@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <!-- This first style block is commented out, but contains many useful flexbox properties. -->
+    <!-- <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      .container {
+        height: 600px;
+        width: 600px;
+        background-color: beige;
+        /* This turns the element into a flex container, and its direct children become flex items. */
+        display: flex;
+        /* flex-direction: Defines the direction of the main axis (e.g., row, row-reverse, column, column-reverse). Default is row. */
+        /* flex-direction: row; */
+        
+        /* justify-content: Aligns flex items along the main axis (horizontally by default). */
+        /* (e.g., flex-start, flex-end, center, space-between, space-around) */
+        /* justify-content: center; */
+
+        /* align-items: Aligns flex items along the cross axis (vertically by default). */
+        /* (e.g., stretch, flex-start, flex-end, center, baseline) */
+        /* align-items: center; */
+
+        /* flex-wrap: Allows items to wrap onto multiple lines if they don't fit on one. */
+        /* (e.g., nowrap, wrap, wrap-reverse) */
+        flex-wrap: wrap-reverse;
+      }
+      .child {
+        width: 100px;
+        height: 100px;
+        margin: 10px;
+      }
+      .child-1 {
+        background-color: red;
+        /* align-self: Allows a single item to override the container's align-items property. */
+        /* align-self: flex-end; */
+
+        /* flex-basis: Specifies the initial main size of a flex item before free space is distributed. */
+        /* flex-basis: 300px; */
+      }
+      .child-2 {
+        background-color: yellow;
+        /* flex-grow: A number specifying how much a flex item will grow relative to others if there's extra space. */
+        /* flex-grow: 2; */
+
+        /* flex-shrink: A number specifying how much a flex item will shrink relative to others if there isn't enough space. */
+        /* flex-shrink: 3; */
+      }
+      .child-3 {
+        background-color: blue;
+      }
+      .child-4 {
+        background-color: green;
+      }
+    </style> -->
+    <style>
+      .container {
+        width: 700px;
+        height: 700px;
+        background-color: beige;
+        /* This makes the .container a flex container. */
+        display: flex;
+      }
+      .child {
+        width: 100px;
+        height: 100px;
+        margin: 10px;
+      }
+      /* The 'order' property controls the order in which flex items appear. */
+      /* Items are sorted in ascending order based on their 'order' value. Default is 0. */
+      .child-1 {
+        background-color: red;
+        /* A large negative number will make this item appear first. */
+        /* order: -456789; */
+      }
+      .child-2 {
+        background-color: green;
+        /* A large positive number will make this item appear last. */
+        /* order: 5; */
+      }
+      .child-3 {
+        background-color: grey;
+        /* order: 2; */
+      }
+      .child-4 {
+        background-color: cadetblue;
+        /* This item will appear before items with a default order of 0 or a positive order. */
+        order: -3;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="child child-1">1</div>
+      <div class="child child-2">2</div>
+      <div class="child child-3">3</div>
+      <div class="child child-4">4</div>
+    </div>
+  </body>
+</html>

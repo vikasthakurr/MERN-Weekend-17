@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <!-- These links are for importing custom fonts from Google Fonts. 'preconnect' helps to establish a connection early for better performance. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- This link specifies the font family ('Lobster') to be loaded from Google Fonts. -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lobster&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      p {
+        /* font-family: Specifies the font for an element. 'sans-serif' is a generic font family. */
+        /* To use the imported Lobster font, you would use: font-family: 'Lobster', cursive; */
+        font-family: sans-serif;
+
+        /* font-weight: Sets how thick or thin characters in text should be displayed. (e.g., normal, bold, 700) */
+        /* font-weight: bolder; */
+
+        /* font-style: Specifies the font style for a text. (e.g., normal, italic) */
+        /* font-style: italic; */
+
+        /* text-transform: Controls the capitalization of text. (e.g., uppercase, lowercase, capitalize) */
+        /* text-transform: lowercase; */
+
+        /* text-align: Specifies the horizontal alignment of text. (e.g., left, right, center) */
+        /* text-align: center; */
+
+        /* text-decoration: Adds decoration to text. (e.g., underline, overline, line-through) */
+        /* text-decoration:underline; */
+
+        /* letter-spacing: Increases or decreases the space between characters. */
+        /* letter-spacing: 5px; */
+
+        /* line-height: Specifies the height of a line box, effectively setting the space between lines of text. */
+        /* line-height: 30px; */
+      }
+      .container {
+        /* The 'background' property can be used as a shorthand, but here 'background' with url() is used to set an image. */
+        background: url("https://images.pexels.com/photos/34622002/pexels-photo-34622002.jpeg");
+        height: 500px;
+        width: 500px;
+        /* background-position: Sets the starting position of a background image. 'center' will center it. */
+        background-position: center;
+        /* background-size: Specifies the size of the background image. 'cover' scales it to fill the container. */
+        background-size: cover;
+        /* background-repeat: Sets if/how a background image will be repeated. (e.g., no-repeat) */
+        /* background-repeat: ; */
+        /* background-color: Sets a background color, visible if the image fails to load. Note: 'g' is not a valid color value. */
+        background-color: g;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container"></div>
+    <p>my name is vikas thakur</p>
+    <!-- This is a commented-out HTML element. It will not be rendered by the browser. -->
+    <!-- <h3>heading 3</h3> -->
+  </body>
+</html>

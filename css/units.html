@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      /* The universal selector (*) selects all HTML elements on the page. */
+      * {
+        margin: 0;
+        padding: 0;
+        /* box-sizing: border-box; makes the box model more intuitive. 
+           The width and height properties include content, padding, and border. */
+        box-sizing: border-box;
+      }
+      /* 
+      This is an example of the CSS Box Model. It consists of: 
+      - margin: Clears an area outside the border. The margin is transparent.
+      - border: A border that goes around the padding and content.
+      - padding: Clears an area around the content. The padding is transparent.
+      - content: The content of the box, where text and images appear.
+      'px' is an absolute unit, meaning it's fixed and not relative to anything else.
+      */
+      /* .container {
+        width: 500px;
+        height: 500px;
+        background-color: red;
+        padding: 150px;
+        border: 100px solid black;
+        margin: 200px;
+      } */
+
+      /* 
+      'rem' is a relative unit. 1rem is equal to the font-size of the root element (usually <html>). 
+      This is good for accessibility and scaling as users can change their browser's base font size.
+      */
+      /* h1 {
+        font-size: 1rem;
+      } */
+
+      /* 
+      '%' is a relative unit. The width and height are relative to the parent element's size.
+      In this case, the .child would be 50% of the .container's width and height.
+      */
+      /* .child {
+        width: 50%;
+        height: 50%;
+        background-color: green;
+      } */
+
+      /* 
+      CSS filters are used to apply graphical effects like blur or color shifting to an element.
+      Note: When you list filter functions separately like this, only the LAST one will be applied.
+      To apply multiple filters, you must include them in a single `filter` property, separated by spaces.
+      For example: filter: grayscale(50%) blur(5px) saturate(30%);
+      */
+      img {
+        width: 400px;
+        height: 400px;
+        /* filter: blur(50px); */ /* Applies a Gaussian blur. */
+        filter: blur(5px); /* A smaller blur value. */
+        filter: brightness(0.4); /* Adjusts the brightness. <1 is darker, >1 is brighter. */
+        filter: contrast(200%); /* Adjusts the contrast. >100% is more contrast. */
+        filter: drop-shadow(16px 16px 20px blue); /* Applies a drop shadow. */
+        filter: grayscale(50%); /* Converts the image to grayscale. */
+        filter: hue-rotate(90deg); /* Rotates the hues of the colors in the image. */
+        filter: invert(75%); /* Inverts the colors. */
+        filter: opacity(25%); /* Applies transparency. */
+        filter: saturate(30%); /* Adjusts the color saturation. */
+        filter: sepia(60%); /* Applies a sepia effect. */
+      }
+    </style>
+  </head>
+  <body>
+    <!-- This is a commented-out div. It won't be displayed in the browser. -->
+    <!-- <div class="container">
+      <div class="child"></div>
+    </div> -->
+
+    <!-- Another commented-out section. -->
+    <!-- <div class="container">
+      <h1>hiii this dummy text</h1>
+      <h1>this is heading2</h1>
+    </div> -->
+
+    <img
+      src="https://images.pexels.com/photos/32634917/pexels-photo-32634917.jpeg"
+      alt=""
+    />
+  </body>
+</html>
