@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button id="red">Red</button>
+    <button id="green">green</button>
+
+    <script>
+      // ============================================
+      // CLOSURES WITH EVENT HANDLERS
+      // ============================================
+
+      /*
+       * WHAT THIS EXAMPLE DEMONSTRATES:
+       * --------------------------------
+       * This example shows how closures work with DOM event handlers.
+       * We're using a "function factory" pattern where:
+       * 1. handleClick() is a function that RETURNS another function
+       * 2. The returned function "remembers" the color parameter (closure)
+       * 3. Each button gets its own event handler with its own color
+       *
+       * KEY CONCEPTS COVERED:
+       * - DOM manipulation (getElementById, onclick)
+       * - Closures (inner function accessing outer function's parameter)
+       * - Function factories (functions that create and return other functions)
+       * - Event handlers (responding to user clicks)
+       */
+
+      // ============================================
+      // STEP 1: GET BUTTON ELEMENTS FROM THE DOM
+      // ============================================
+
+      /*
+       * DOM (Document Object Model):
+       * - The DOM is a tree-like representation of the HTML document
+       * - JavaScript can access and manipulate HTML elements through the DOM
+       *
+       * document.getElementById("id"):
+       * - Finds and returns the HTML element with the specified id
+       * - Returns null if no element is found
+       * - This is one of the most common ways to access DOM elements
+       */
+
+      // Get the red button element and attach a click event handler
+      // handleClick("red") is called immediately and RETURNS a function
+      // That returned function is assigned to the onclick property
+      const red = (document.getElementById("red").onclick = handleClick("red"));
+
+      // Get the green button element and attach a click event handler
+      // handleClick("green") is called immediately and RETURNS a function
+      // That returned function is assigned to the onclick property
+      const green = (document.getElementById("green").onclick =
+        handleClick("green"));
+
+      /*
+       * WHAT'S HAPPENING HERE:
+       * ----------------------
+       * 1. document.getElementById("red") finds the button with id="red"
+       * 2. handleClick("red") is executed and returns a NEW function
+       * 3. That returned function is assigned to the button's onclick property
+       * 4. The returned function "remembers" the color "red" through closure
+       * 5. Same process happens for the green button with color "green"
+       *
+       * IMPORTANT: handleClick("red") is NOT the event handler itself!
+       * It CREATES and RETURNS the event handler function.
+       */
+
+      // Uncomment to see what the 'red' variable contains:
+      // console.log(red); // Output: function () { document.body.style.backgroundColor = color; }
+
+      // ============================================
+      // STEP 2: THE FUNCTION FACTORY (CLOSURE)
+      // ============================================
+
+      /*
+       * FUNCTION FACTORY PATTERN:
+       * -------------------------
+       * A function factory is a function that creates and returns other functions.
+       * This pattern is useful when you need multiple similar functions with different configurations.
+       *
+       * In this case:
+       * - handleClick is the factory
+       * - It creates event handler functions
+       * - Each handler has a different color "baked in" via closure
+       */
+
+      function handleClick(color) {
+        // 'color' is a parameter of the outer function
+        // It will be "remembered" by the inner function through closure
+
+        // This inner function is what actually runs when the button is clicked
+        return function () {
+          // This inner function has access to 'color' from the outer function
+          // Even though handleClick() has already finished executing!
+          // This is a CLOSURE - the inner function "closes over" the 'color' variable
+
+          // Change the background color of the entire page body
+          document.body.style.backgroundColor = color;
+        };
+      }
+
+      /*
+       * HOW THIS WORKS:
+       * ---------------
+       * When you call handleClick("red"):
+       * 1. A new execution context is created with color = "red"
+       * 2. An inner function is created that references 'color'
+       * 3. The inner function is returned
+       * 4. The execution context of handleClick is normally destroyed, BUT...
+       * 5. Because the inner function still references 'color', it's kept in memory
+       * 6. The inner function becomes the onclick handler for the red button
+       *
+       * When the red button is clicked:
+       * 1. The inner function executes
+       * 2. It accesses 'color' which is still "red" (from the closure)
+       * 3. The background color changes to red
+       *
+       * The same process happens independently for the green button!
+       */
+
+      // ============================================
+      // ALTERNATIVE APPROACHES (FOR LEARNING)
+      // ============================================
+
+      /*
+       * APPROACH 1: Without Closure (Inline Functions)
+       * This works but requires duplicating code for each button
+       */
+      // document.getElementById("red").onclick = function() {
+      //   document.body.style.backgroundColor = "red";
+      // };
+      // document.getElementById("green").onclick = function() {
+      //   document.body.style.backgroundColor = "green";
+      // };
+
+      /*
+       * APPROACH 2: Using addEventListener (Modern Best Practice)
+       * addEventListener is preferred over onclick because:
+       * - You can attach multiple listeners to the same event
+       * - You can remove listeners later
+       * - Better separation of concerns
+       */
+      // document.getElementById("red").addEventListener("click", handleClick("red"));
+      // document.getElementById("green").addEventListener("click", handleClick("green"));
+
+      /*
+       * APPROACH 3: Using Arrow Functions (ES6+)
+       * More concise syntax, same closure behavior
+       */
+      // const handleClick = (color) => () => {
+      //   document.body.style.backgroundColor = color;
+      // };
+
+      /*
+       * APPROACH 4: Without Closure (Using 'this' keyword)
+       * Access the clicked element directly
+       */
+      // function changeColor() {
+      //   // 'this' refers to the element that triggered the event
+      //   const color = this.id; // Get the id of the clicked button
+      //   document.body.style.backgroundColor = color;
+      // }
+      // document.getElementById("red").onclick = changeColor;
+      // document.getElementById("green").onclick = changeColor;
+
+    </script>
+  </body>
+</html>

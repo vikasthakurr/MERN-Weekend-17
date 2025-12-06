@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>hii</h1>
+
+    <script>
+      // ============================================
+      // CLOSURES IN JAVASCRIPT
+      // ============================================
+
+      /*
+       * WHAT IS A CLOSURE?
+       * ------------------
+       * A closure is a function that has access to variables from its outer (enclosing) function's scope,
+       * even after the outer function has finished executing.
+       *
+       * In simple terms: A closure gives you access to an outer function's scope from an inner function.
+       *
+       * KEY CONCEPT: In JavaScript, closures are created every time a function is created, at function creation time.
+       */
+
+      /*
+       * HOW CLOSURES WORK:
+       * ------------------
+       * 1. When a function is defined inside another function, the inner function has access to:
+       *    - Its own variables (local scope)
+       *    - Variables from the outer function (outer scope)
+       *    - Global variables (global scope)
+       *
+       * 2. Even after the outer function has returned, the inner function still maintains access
+       *    to the outer function's variables through the closure.
+       *
+       * 3. This happens because JavaScript maintains a reference to the outer function's scope
+       *    in memory as long as the inner function exists.
+       */
+
+      /*
+       * WHY CLOSURES ARE USEFUL:
+       * ------------------------
+       * 1. Data Privacy/Encapsulation - Create private variables that can't be accessed directly
+       * 2. Function Factories - Create functions with preset parameters
+       * 3. Callbacks and Event Handlers - Maintain state in asynchronous operations
+       * 4. Memoization - Cache results of expensive function calls
+       * 5. Currying - Transform functions with multiple arguments into a sequence of functions
+       */
+
+      // ============================================
+      // EXAMPLE 1: BASIC CLOSURE
+      // ============================================
+
+      function outer() {
+        // This variable 'a' is in the outer function's scope
+        let a = 10;
+
+        // The inner function is defined inside outer function
+        function inner() {
+          // inner() can access 'a' from outer() - this creates a closure
+          console.log(a); // Output: 10
+        }
+
+        // We return the inner function (not calling it, just returning the reference)
+        return inner;
+      }
+
+      // outer() is executed and returns the inner function
+      // The outer() function has finished executing, but...
+      let res = outer();
+
+      // ...when we call res() (which is the inner function), it still has access to 'a'
+      // This is the closure in action!
+      res(); // Output: 10
+
+      // This shows that res is a function object
+      console.log(res); // Output: [Function: inner]
+
+      /*
+       * WHAT HAPPENED ABOVE:
+       * --------------------
+       * 1. outer() was called and created a variable 'a' with value 10
+       * 2. outer() defined inner() function which references 'a'
+       * 3. outer() returned the inner() function and finished executing
+       * 4. Normally, 'a' would be garbage collected, BUT...
+       * 5. Because inner() still references 'a', JavaScript keeps 'a' in memory
+       * 6. When we call res() (which is inner()), it can still access 'a'
+       * 7. This is a CLOSURE - inner() "closes over" the variable 'a'
+       */
+
+      // ============================================
+      // EXAMPLE 2: CLOSURE WITH PARAMETERS
+      // ============================================
+
+      function createMultiplier(multiplier) {
+        // multiplier is stored in the closure
+        return function (number) {
+          return number * multiplier;
+        };
+      }
+
+      let multiplyBy5 = createMultiplier(5);
+      let multiplyBy10 = createMultiplier(10);
+
+      console.log(multiplyBy5(3)); // Output: 15 (3 * 5)
+      console.log(multiplyBy10(3)); // Output: 30 (3 * 10)
+
+      /*
+       * Each closure maintains its own separate copy of the outer function's variables.
+       * multiplyBy5 remembers multiplier = 5
+       * multiplyBy10 remembers multiplier = 10
+       */
+
+      // ============================================
+      // EXAMPLE 3: DATA PRIVACY WITH CLOSURES
+      // ============================================
+
+      function createCounter() {
+        let count = 0; // Private variable - cannot be accessed directly from outside
+
+        return {
+          increment: function () {
+            count++;
+            return count;
+          },
+          decrement: function () {
+            count--;
+            return count;
+          },
+          getCount: function () {
+            return count;
+          },
+        };
+      }
+
+      let counter = createCounter();
+      console.log(counter.increment()); // Output: 1
+      console.log(counter.increment()); // Output: 2
+      console.log(counter.decrement()); // Output: 1
+      console.log(counter.getCount()); // Output: 1
+      // console.log(counter.count); // Output: undefined (count is private!)
+
+      /*
+       * The 'count' variable is completely private and can only be modified
+       * through the methods we've exposed (increment, decrement, getCount).
+       * This is data encapsulation using closures.
+       */
+
+      // ============================================
+      // EXAMPLE 4: COMMON PITFALL - CLOSURES IN LOOPS
+      // ============================================
+
+      // WRONG WAY (common mistake):
+      console.log("--- Wrong way (var in loop) ---");
+      for (var i = 1; i <= 3; i++) {
+        setTimeout(function () {
+          console.log(i); // Output: 4, 4, 4 (not 1, 2, 3!)
+        }, i * 1000);
+      }
+
+      /*
+       * Why does it print 4, 4, 4?
+       * - 'var' has function scope, not block scope
+       * - All three setTimeout callbacks share the same 'i' variable
+       * - By the time the callbacks execute, the loop has finished and i = 4
+       */
+
+      // CORRECT WAY 1: Using 'let' (block scope)
+      console.log("--- Correct way (let in loop) ---");
+      for (let j = 1; j <= 3; j++) {
+        setTimeout(function () {
+          console.log(j); // Output: 1, 2, 3 (correct!)
+        }, j * 1000);
+      }
+
+      /*
+       * 'let' creates a new binding for each iteration,
+       * so each closure gets its own copy of j
+       */
+
+      // CORRECT WAY 2: Using IIFE (Immediately Invoked Function Expression)
+      console.log("--- Correct way (IIFE) ---");
+      for (var k = 1; k <= 3; k++) {
+        (function (num) {
+          setTimeout(function () {
+            console.log(num); // Output: 1, 2, 3 (correct!)
+          }, num * 1000);
+        })(k);
+      }
+
+      /*
+       * The IIFE creates a new scope for each iteration,
+       * capturing the current value of k in the parameter 'num'
+       */
+
+      // ============================================
+      // KEY TAKEAWAYS:
+      // ============================================
+      /*
+       * 1. Closures allow inner functions to access outer function variables
+       * 2. The outer function's variables persist in memory as long as the inner function exists
+       * 3. Each closure maintains its own independent copy of the outer variables
+       * 4. Closures are useful for data privacy, function factories, and callbacks
+       * 5. Be careful with closures in loops - use 'let' or IIFE to avoid common pitfalls
+       * 6. Closures are created automatically in JavaScript - you don't need special syntax
+       */
+    </script>
+  </body>
+</html>
