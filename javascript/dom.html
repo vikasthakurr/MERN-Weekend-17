@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .vikas {
+        color: green;
+        font-size: 50px;
+        font-style: italic;
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>this is heading1</h1>
+    <h1>this is heading2</h1>
+    <!-- <p id="vikas">this is para</p> -->
+    <span class="span">this is span</span>
+    <span class="span">span2</span>
+
+    <!-- <div class="container">
+      <p>item-1</p>
+      <p>item-2</p>
+      <p>item-3</p>
+      <p>item-4</p>
+    </div> -->
+    <!-- <img src="" alt=""> -->
+
+    <script>
+      // DEFINITION:
+      // DOM is a programming interface for HTML documents
+      // It represents the page structure as a tree of objects
+      // JavaScript can access and manipulate HTML elements through DOM
+
+      // METHOD 1: getElementsByTagName()
+      // Returns an HTMLCollection of all elements with the specified tag name
+      // Returns multiple elements (array-like object)
+      //   let heading1 = document.getElementsByTagName("h1");
+      //   console.log(heading1); // Returns all <h1> elements
+      //   console.log(heading1[0]); // Access first h1 element
+
+      // METHOD 2: getElementsByClassName()
+      // Returns all elements with the specified class name
+      // Returns an HTMLCollection (live collection - updates automatically)
+      //   const res = document.getElementsByClassName("span");
+      //   console.log(res); // Returns all elements with class "span"
+      //   console.log(res.length); // Number of elements found
+
+      // METHOD 3: getElementById()
+      // Returns a SINGLE element with the specified ID
+      // IDs should be unique, so this returns only one element
+      //   const res = document.getElementById("vikas");
+      //   console.log(res); // Returns the element with id="vikas"
+
+      // METHOD 4: querySelectorAll()
+      // Modern method - uses CSS selectors
+      // Returns a NodeList (static - doesn't update automatically)
+      // More flexible - can use any CSS selector
+      //   const res = document.querySelectorAll(".span");
+      //   console.log(res); // Returns all elements matching ".span"
+      //   // Can use: ".class", "#id", "tag", "div > p", etc.
+
+      // METHOD 5: querySelector()
+      // Returns the FIRST element that matches the CSS selector
+      //   const firstPara = document.querySelector("p");
+      //   console.log(firstPara); // Returns first <p> element only
+
+      // Step 1: Create a new element using createElement()
+      //   const para = document.createElement("p");
+
+      // Step 2: Add content to the element
+      //   para.innerText = "weekend batch 17";
+      //   // innerText - sets text content
+      //   // innerHTML - can set HTML content with tags
+
+      // Step 3: Add styling using classList
+      //   para.classList.add("vikas");
+      //   // classList.add() - adds a CSS class
+      //   // classList.remove() - removes a class
+      //   // classList.toggle() - toggles a class on/off
+
+      // Step 4: Append to the DOM (make it visible on page)
+      //   document.body.appendChild(para);
+      //   // appendChild() adds element as the last child
+
+      //   console.log(para); // View the created element
+
+      //   const container = document.querySelector("p");
+      //   console.log(container); // The selected element
+
+      //   console.log(container.parentNode);
+      //   // parentNode - gets the parent element
+      //   // Other traversal properties:
+      //   // .childNodes - all child nodes
+      //   // .children - only element children
+      //   // .firstChild / .lastChild
+      //   // .nextSibling / .previousSibling
+
+      // Creating an image element dynamically
+      //   const img = document.createElement("img");
+
+      // Setting attributes using setAttribute()
+      //   img.setAttribute(
+      //     "src",
+      //     "https://images.pexels.com/photos/3225985/pexels-photo-33225985.jpeg"
+      //   );
+      //   // setAttribute(name, value) - sets any HTML attribute
+
+      //   img.setAttribute("alt", "this is image of building");
+      //   // alt attribute for accessibility
+
+      // Alternative: Direct property assignment
+      //   // img.src = "url";
+      //   // img.alt = "description";
+
+      // Other attribute methods:
+      //   // getAttribute("name") - gets attribute value
+      //   // removeAttribute("name") - removes an attribute
+      //   // hasAttribute("name") - checks if attribute exists
+
+      //   img.style.width = "250px";
+      //   img.style.height = "250px";
+      //   // style.property - sets inline CSS
+      //   // Use camelCase for CSS properties: backgroundColor, fontSize, etc.
+
+      //   document.body.appendChild(img);
+
+      // Create a new div container
+      const container = document.createElement("div");
+
+      // Apply inline styles
+      container.style.width = "500px";
+      container.style.height = "500px";
+      container.style.backgroundColor = "yellow";
+      // Note: CSS property names in JavaScript use camelCase
+      // background-color becomes backgroundColor
+
+      // Add to the page
+      document.body.appendChild(container);
+
+      // KEY TAKEAWAYS:
+      // 1. DOM allows JavaScript to interact with HTML
+      // 2. Multiple ways to select elements: getElement*, querySelector*
+      // 3. createElement() + appendChild() to add new elements
+      // 4. Use .style for inline CSS, classList for classes
+      // 5. setAttribute() to add/modify HTML attributes
+      // 6. parentNode, children, etc. for DOM traversal
+    </script>
+  </body>
+</html>
