@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .grandparent {
+        width: 800px;
+        height: 800px;
+        background-color: beige;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .parent {
+        width: 600px;
+        height: 600px;
+        background-color: green;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .child {
+        width: 300px;
+        height: 300px;
+        background-color: yellow;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="grandparent">
+      grandparent
+      <div class="parent">
+        parent
+        <div class="child">child</div>
+      </div>
+    </div>
+    <p class="data"></p>
+    <script>
+      /*
+      ============================================
+      JAVASCRIPT EVENTS - COMPREHENSIVE NOTES
+      ============================================
+
+      1. WHAT IS AN EVENT?
+      ---------------------
+      Definition: An event is an action or occurrence that happens in the browser that the browser tells you about
+      so you can respond to it. Events can be triggered by user interactions or by the browser itself.
+
+      Common Event Types:
+      - Mouse Events: click, dblclick, mousedown, mouseup, mouseover, mouseout, mousemove
+      - Keyboard Events: keydown, keyup, keypress
+      - Form Events: submit, change, focus, blur, input
+      - Window Events: load, resize, scroll, unload
+      - Touch Events: touchstart, touchmove, touchend
+
+      Example:
+      element.addEventListener('click', function() {
+        console.log('Element was clicked!');
+      });
+
+
+      2. EVENT FLOW - THREE PHASES
+      ------------------------------
+      When an event occurs on an element, it doesn't just trigger on that element alone.
+      The event travels through the DOM tree in THREE phases:
+
+      Phase 1: CAPTURING PHASE (also called TRICKLING)
+      Phase 2: TARGET PHASE
+      Phase 3: BUBBLING PHASE
+
+      Visual Representation:
+      
+      Window
+        ↓ (Capturing/Trickling)
+      Document
+        ↓
+      <html>
+        ↓
+      <body>
+        ↓
+      <div class="grandparent">
+        ↓
+      <div class="parent">
+        ↓
+      <div class="child"> ← TARGET (clicked element)
+        ↑
+      <div class="parent">
+        ↑
+      <div class="grandparent">
+        ↑ (Bubbling)
+      <body>
+        ↑
+      <html>
+        ↑
+      Document
+        ↑
+      Window
+
+
+      3. EVENT CAPTURING / TRICKLING
+      --------------------------------
+      Definition: Capturing (or Trickling) is the first phase of event propagation where the event
+      travels DOWN from the Window object through the DOM tree to the target element.
+
+      - The event starts at the Window object
+      - It goes through Document, then HTML, then BODY
+      - It continues down through all ancestor elements
+      - Finally reaches the target element
+
+      How to Use Capturing:
+      By default, event listeners listen during the BUBBLING phase.
+      To listen during the CAPTURING phase, set the third parameter to TRUE:
+
+      element.addEventListener('click', function() {
+        console.log('Capturing phase');
+      }, true); // ← true enables capturing phase
+
+      Example with our HTML structure:
+      grandparent.addEventListener('click', () => {
+        console.log('Grandparent - Capturing');
+      }, true);
+
+      parent.addEventListener('click', () => {
+        console.log('Parent - Capturing');
+      }, true);
+
+      child.addEventListener('click', () => {
+        console.log('Child - Capturing');
+      }, true);
+
+      // If you click on child, output will be:
+      // Grandparent - Capturing (first, coming down)
+      // Parent - Capturing (second, coming down)
+      // Child - Capturing (third, reached target)
+
+
+      4. EVENT BUBBLING
+      ------------------
+      Definition: Bubbling is the third phase of event propagation where the event travels UP
+      from the target element through its ancestors back to the Window object.
+
+      - The event starts at the target element
+      - It bubbles UP through all parent elements
+      - It continues up through BODY, HTML, Document
+      - Finally reaches the Window object
+
+      How to Use Bubbling:
+      By default, addEventListener uses bubbling (third parameter is false or omitted):
+
+      element.addEventListener('click', function() {
+        console.log('Bubbling phase');
+      }); // Default is bubbling
+
+      // OR explicitly:
+      element.addEventListener('click', function() {
+        console.log('Bubbling phase');
+      }, false); // ← false means bubbling phase (default)
+
+      Example with our HTML structure:
+      child.addEventListener('click', () => {
+        console.log('Child - Bubbling');
+      });
+
+      parent.addEventListener('click', () => {
+        console.log('Parent - Bubbling');
+      });
+
+      grandparent.addEventListener('click', () => {
+        console.log('Grandparent - Bubbling');
+      });
+
+      // If you click on child, output will be:
+      // Child - Bubbling (first, at target)
+      // Parent - Bubbling (second, bubbling up)
+      // Grandparent - Bubbling (third, bubbling up)
+
+      COMPLETE EVENT FLOW (Capturing + Bubbling):
+      If all elements have both capturing and bubbling listeners:
+      
+      // Click on child element outputs:
+      // 1. Grandparent - Capturing (going down)
+      // 2. Parent - Capturing (going down)
+      // 3. Child - Capturing (reached target)
+      // 4. Child - Bubbling (leaving target)
+      // 5. Parent - Bubbling (going up)
+      // 6. Grandparent - Bubbling (going up)
+
+
+      5. STOPPING EVENT PROPAGATION
+      -------------------------------
+      You can stop the event from propagating further:
+
+      a) stopPropagation():
+      Stops the event from bubbling up or capturing down to other elements
+
+      element.addEventListener('click', (e) => {
+        e.stopPropagation(); // Event won't reach parent elements
+        console.log('Event stopped here!');
+      });
+
+      b) stopImmediatePropagation():
+      Stops all other listeners on the same element AND prevents propagation
+
+      element.addEventListener('click', (e) => {
+        e.stopImmediatePropagation();
+        console.log('First listener');
+      });
+
+      element.addEventListener('click', () => {
+        console.log('This will NOT run'); // Won't execute
+      });
+
+
+      6. EVENT DELEGATION
+      --------------------
+      Definition: Event Delegation is a technique where instead of adding event listeners to
+      multiple child elements, you add ONE listener to a parent element and use event bubbling
+      to handle events on child elements.
+
+      Why Use Event Delegation?
+      ✓ Better Performance: Only one event listener instead of many
+      ✓ Dynamic Elements: Works for elements added to the DOM later
+      ✓ Less Memory: Fewer event listeners = less memory usage
+      ✓ Cleaner Code: Centralized event handling
+
+      How It Works:
+      - Add event listener to a parent element
+      - When a child is clicked, the event bubbles up to the parent
+      - Use e.target to identify which child was actually clicked
+      - Execute code based on the clicked child
+
+      Example WITHOUT Event Delegation (Inefficient):
+      const buttons = document.querySelectorAll('.button');
+      buttons.forEach(button => {
+        button.addEventListener('click', () => {
+          console.log('Button clicked');
+        });
+      }); // Creates multiple listeners
+
+      Example WITH Event Delegation (Efficient):
+      const container = document.querySelector('.container');
+      container.addEventListener('click', (e) => {
+        if (e.target.classList.contains('button')) {
+          console.log('Button clicked');
+        }
+      }); // Only ONE listener handles all buttons!
+
+      Real-World Example:
+      <ul id="todo-list">
+        <li>Task 1 <button class="delete">Delete</button></li>
+        <li>Task 2 <button class="delete">Delete</button></li>
+        <li>Task 3 <button class="delete">Delete</button></li>
+      </ul>
+
+      // Event Delegation approach:
+      document.getElementById('todo-list').addEventListener('click', (e) => {
+        if (e.target.classList.contains('delete')) {
+          e.target.parentElement.remove(); // Remove the task
+        }
+      });
+
+      // This works even for tasks added dynamically later!
+
+
+      7. EVENT OBJECT PROPERTIES
+      ----------------------------
+      When an event occurs, an Event object is passed to the handler function.
+      Important properties:
+
+      e.target: The element that triggered the event (the actual clicked element)
+      e.currentTarget: The element that the event listener is attached to
+      e.type: The type of event (e.g., 'click', 'keydown')
+      e.preventDefault(): Prevents default browser behavior (e.g., form submission)
+      e.stopPropagation(): Stops event from bubbling/capturing
+      e.clientX, e.clientY: Mouse position relative to viewport
+      e.key: The key pressed (for keyboard events)
+      e.timeStamp: When the event occurred
+
+      Example:
+      element.addEventListener('click', (e) => {
+        console.log('Target:', e.target); // Element that was clicked
+        console.log('Current Target:', e.currentTarget); // Element with listener
+        console.log('Event Type:', e.type); // 'click'
+      });
+
+
+      8. PRACTICAL EXAMPLE BELOW
+      ----------------------------
+      The code below demonstrates EVENT DELEGATION and EVENT BUBBLING:
+      - We attach ONE listener to the grandparent element
+      - When ANY child (parent or child div) is clicked, the event BUBBLES up
+      - The grandparent's listener catches it using e.target
+      - We can identify which specific element was clicked
+      */
+
+      // Select the grandparent element
+      const grandparent = document.querySelector(".grandparent");
+
+      // Add event listener to grandparent (EVENT DELEGATION)
+      // This ONE listener will handle clicks on grandparent, parent, AND child
+      // because of EVENT BUBBLING
+      grandparent.addEventListener("click", (e) => {
+        // e.target = the actual element that was clicked (could be grandparent, parent, or child)
+        // e.currentTarget = grandparent (the element this listener is attached to)
+
+        console.log("Clicked element:", e.target.className);
+        console.log("Listener attached to:", e.currentTarget.className);
+
+        // Update the paragraph to show which element was clicked
+        const para = document.querySelector(".data");
+        para.innerText = `${e.target.className} was clicked using mouse`;
+
+        /*
+        TRY THIS:
+        1. Click on the yellow "child" div
+           - e.target will be "child"
+           - Event bubbles up to grandparent listener
+        
+        2. Click on the green "parent" div
+           - e.target will be "parent"
+           - Event bubbles up to grandparent listener
+        
+        3. Click on the beige "grandparent" div
+           - e.target will be "grandparent"
+           - Event is already at the listener
+        
+        This demonstrates EVENT DELEGATION - one listener handles all three elements!
+        */
+      });
+
+      /*
+      ADDITIONAL EXAMPLES TO TRY:
+      
+      // Example 1: Capturing Phase
+      grandparent.addEventListener("click", () => {
+        console.log("Grandparent - Capturing Phase");
+      }, true); // true = capturing phase
+
+      const parent = document.querySelector(".parent");
+      parent.addEventListener("click", () => {
+        console.log("Parent - Capturing Phase");
+      }, true);
+
+      const child = document.querySelector(".child");
+      child.addEventListener("click", () => {
+        console.log("Child - Capturing Phase");
+      }, true);
+
+      // Example 2: Bubbling Phase (default)
+      child.addEventListener("click", () => {
+        console.log("Child - Bubbling Phase");
+      });
+
+      parent.addEventListener("click", () => {
+        console.log("Parent - Bubbling Phase");
+      });
+
+      grandparent.addEventListener("click", () => {
+        console.log("Grandparent - Bubbling Phase");
+      });
+
+      // Example 3: Stop Propagation
+      child.addEventListener("click", (e) => {
+        e.stopPropagation(); // Event won't bubble to parent or grandparent
+        console.log("Child clicked - event stopped here!");
+      });
+
+      // Example 4: Prevent Default
+      const link = document.querySelector('a');
+      link.addEventListener('click', (e) => {
+        e.preventDefault(); // Link won't navigate
+        console.log('Link clicked but navigation prevented');
+      });
+      */
+    </script>
+  </body>
+</html>

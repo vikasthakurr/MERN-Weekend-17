@@ -66,7 +66,7 @@ Array.prototype.CalculateTax = function (cb) {
 // Output: [200, 400, 600, 800, 1000] - 20% of each salary
 
 // Creating another array to demonstrate
-let arr = [4000, 50000, 60000];
+// let arr = [4000, 50000, 60000];
 
 // We can use our custom HOF on any array
 // arr.CalculateTax(fiftyPercent);

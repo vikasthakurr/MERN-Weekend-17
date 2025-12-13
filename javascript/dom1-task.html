@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DOM Manipulation - Dynamic Shape Generator</title>
+    <style>
+      /* ============================================
+         MODERN CSS STYLING WITH BEST PRACTICES
+         ============================================ */
+
+      /* Import Google Font for better typography */
+      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+
+      /* CSS Variables for consistent theming */
+      :root {
+        --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        --success-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        --container-bg: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+        --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
+        --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.15);
+        --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.2);
+        --border-radius: 12px;
+        --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      /* Reset and base styles */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+          sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        padding: 40px 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 30px;
+      }
+
+      /* Header section with title and description */
+      .header {
+        text-align: center;
+        color: white;
+        margin-bottom: 20px;
+        animation: fadeInDown 0.6s ease-out;
+      }
+
+      .header h1 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 10px;
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      }
+
+      .header p {
+        font-size: 1.1rem;
+        opacity: 0.9;
+        font-weight: 400;
+      }
+
+      /* Control panel styling */
+      .controls {
+        background: white;
+        padding: 30px 40px;
+        border-radius: var(--border-radius);
+        box-shadow: var(--shadow-lg);
+        display: flex;
+        gap: 15px;
+        align-items: center;
+        animation: fadeInUp 0.6s ease-out;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      /* Input field styling */
+      #quantity {
+        padding: 14px 20px;
+        font-size: 16px;
+        border: 2px solid #e0e0e0;
+        border-radius: 8px;
+        outline: none;
+        font-family: "Inter", sans-serif;
+        transition: var(--transition);
+        min-width: 250px;
+      }
+
+      #quantity:focus {
+        border-color: #667eea;
+        box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+      }
+
+      #quantity::placeholder {
+        color: #999;
+      }
+
+      /* Button styling with gradient and hover effects */
+      #generate {
+        padding: 14px 32px;
+        font-size: 16px;
+        font-weight: 600;
+        color: white;
+        background: var(--primary-gradient);
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: var(--transition);
+        box-shadow: var(--shadow-md);
+        font-family: "Inter", sans-serif;
+      }
+
+      #generate:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-lg);
+      }
+
+      #generate:active {
+        transform: translateY(0);
+      }
+
+      /* Container for shapes */
+      .container {
+        width: 90%;
+        max-width: 1000px;
+        min-height: 500px;
+        background: white;
+        border-radius: var(--border-radius);
+        padding: 30px;
+        box-shadow: var(--shadow-lg);
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        justify-content: center;
+        align-items: flex-start;
+        animation: fadeInUp 0.8s ease-out;
+      }
+
+      /* Circle shapes with gradient and animation */
+      .circle {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        background: var(--secondary-gradient);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: var(--shadow-md);
+        transition: var(--transition);
+        animation: popIn 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+      }
+
+      /* Hover effect for circles */
+      .circle:hover {
+        transform: scale(1.1) rotate(5deg);
+        box-shadow: var(--shadow-lg);
+      }
+
+      /* Shine effect on circles */
+      .circle::before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: linear-gradient(
+          45deg,
+          transparent,
+          rgba(255, 255, 255, 0.3),
+          transparent
+        );
+        transform: rotate(45deg);
+        transition: var(--transition);
+      }
+
+      .circle:hover::before {
+        animation: shine 0.6s ease;
+      }
+
+      /* Animations */
+      @keyframes fadeInDown {
+        from {
+          opacity: 0;
+          transform: translateY(-30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes popIn {
+        0% {
+          opacity: 0;
+          transform: scale(0);
+        }
+        50% {
+          transform: scale(1.1);
+        }
+        100% {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+
+      @keyframes shine {
+        0% {
+          left: -50%;
+        }
+        100% {
+          left: 150%;
+        }
+      }
+
+      /* Responsive design */
+      @media (max-width: 768px) {
+        .header h1 {
+          font-size: 2rem;
+        }
+
+        .controls {
+          flex-direction: column;
+          padding: 20px;
+        }
+
+        #quantity {
+          min-width: 100%;
+        }
+
+        .circle {
+          width: 80px;
+          height: 80px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header Section -->
+    <div class="header">
+      <h1>Dynamic Shape Generator</h1>
+      <p>Learn DOM Manipulation with Interactive Examples</p>
+    </div>
+
+    <!-- Control Panel -->
+    <div class="controls">
+      <input
+        type="number"
+        name="quantity"
+        id="quantity"
+        placeholder="Enter number of shapes (e.g., 10)"
+        min="1"
+        max="50"
+      />
+      <button id="generate">Generate Shapes</button>
+    </div>
+
+    <!-- Container for dynamically created shapes -->
+    <div class="container"></div>
+
+    <script>
+      /*
+      ============================================
+      DOM MANIPULATION - COMPREHENSIVE NOTES
+      ============================================
+
+      WHAT IS THE DOM?
+      -----------------
+      DOM stands for Document Object Model. It's a programming interface that represents
+      the HTML document as a tree structure where each HTML element is a node.
+
+      The DOM allows JavaScript to:
+      ✓ Access HTML elements
+      ✓ Modify HTML content and attributes
+      ✓ Change CSS styles
+      ✓ Create new elements
+      ✓ Delete existing elements
+      ✓ React to HTML events
+
+
+      KEY DOM MANIPULATION METHODS USED IN THIS EXAMPLE:
+      ---------------------------------------------------
+
+      1. document.querySelector(selector)
+      ------------------------------------
+      Definition: Selects the FIRST element that matches the CSS selector.
+      Returns: The element object, or null if not found.
+
+      Syntax:
+      const element = document.querySelector('.className');
+      const element = document.querySelector('#idName');
+      const element = document.querySelector('tagName');
+
+      Example:
+      const button = document.querySelector('#generate'); // Selects element with id="generate"
+      const container = document.querySelector('.container'); // Selects first element with class="container"
+
+      Alternative: document.querySelectorAll(selector)
+      - Returns ALL matching elements as a NodeList (array-like)
+      - Example: const allCircles = document.querySelectorAll('.circle');
+
+
+      2. document.createElement(tagName)
+      -----------------------------------
+      Definition: Creates a new HTML element (but doesn't add it to the page yet).
+      Returns: The newly created element object.
+
+      Syntax:
+      const newElement = document.createElement('tagName');
+
+      Example:
+      const newDiv = document.createElement('div'); // Creates <div></div>
+      const newPara = document.createElement('p'); // Creates <p></p>
+      const newButton = document.createElement('button'); // Creates <button></button>
+
+      Important: The created element exists in memory but is NOT visible until
+      you append it to the DOM using appendChild() or similar methods.
+
+
+      3. element.classList
+      ---------------------
+      Definition: A property that provides methods to manipulate CSS classes on an element.
+
+      Common Methods:
+      - classList.add('className'): Adds a class
+      - classList.remove('className'): Removes a class
+      - classList.toggle('className'): Adds if absent, removes if present
+      - classList.contains('className'): Checks if class exists (returns true/false)
+      - classList.replace('oldClass', 'newClass'): Replaces a class
+
+      Example:
+      const div = document.createElement('div');
+      div.classList.add('circle'); // <div class="circle"></div>
+      div.classList.add('active'); // <div class="circle active"></div>
+      div.classList.remove('active'); // <div class="circle"></div>
+      div.classList.toggle('highlight'); // Toggles the class on/off
+
+
+      4. parentElement.appendChild(childElement)
+      -------------------------------------------
+      Definition: Adds a child element to the end of a parent element's children.
+      Returns: The appended child element.
+
+      Syntax:
+      parentElement.appendChild(childElement);
+
+      Example:
+      const container = document.querySelector('.container');
+      const newDiv = document.createElement('div');
+      container.appendChild(newDiv); // Adds newDiv inside container
+
+      Alternative Methods:
+      - prepend(): Adds to the beginning
+      - insertBefore(): Adds before a specific element
+      - append(): Can add multiple elements and text
+
+
+      5. element.addEventListener(event, callback)
+      ---------------------------------------------
+      Definition: Attaches an event handler to an element without overwriting existing handlers.
+
+      Syntax:
+      element.addEventListener('eventType', function(event) {
+        // Code to execute when event occurs
+      });
+
+      Example:
+      button.addEventListener('click', () => {
+        console.log('Button clicked!');
+      });
+
+      Common Events:
+      - 'click': Mouse click
+      - 'input': Input value changes
+      - 'submit': Form submission
+      - 'keydown': Key pressed
+      - 'mouseover': Mouse enters element
+
+
+      6. input.value
+      ---------------
+      Definition: Gets or sets the value of an input element.
+
+      Syntax:
+      const inputValue = inputElement.value; // Get value
+      inputElement.value = 'new value'; // Set value
+
+      Example:
+      const quantity = document.querySelector('#quantity').value; // Gets user input
+      document.querySelector('#quantity').value = ''; // Clears the input
+
+
+      PRACTICAL EXAMPLE BREAKDOWN:
+      -----------------------------
+      The code below demonstrates dynamic DOM manipulation by creating
+      multiple circle elements based on user input.
+
+      Flow:
+      1. User enters a number in the input field
+      2. User clicks the "Generate" button
+      3. JavaScript reads the input value
+      4. A loop runs that many times
+      5. Each iteration creates a new div element
+      6. Adds the 'circle' class to style it
+      7. Appends it to the container
+      8. CSS animations make it appear smoothly
+      */
+
+      // STEP 1: Select the generate button using its ID
+      // querySelector returns the element object
+      const generate = document.querySelector("#generate");
+
+      // STEP 2: Add a click event listener to the button
+      // When clicked, the arrow function executes
+      generate.addEventListener("click", () => {
+        // STEP 3: Get the value from the input field
+        // .value returns the text entered by the user as a string
+        const quantity = document.querySelector("#quantity").value;
+
+        // Input validation: Check if user entered a valid number
+        if (!quantity || quantity <= 0) {
+          alert("Please enter a valid number greater than 0!");
+          return; // Exit the function early
+        }
+
+        // Limit maximum shapes to prevent browser slowdown
+        if (quantity > 50) {
+          alert("Maximum 50 shapes allowed!");
+          return;
+        }
+
+        // STEP 4: Select the container where shapes will be added
+        const container = document.querySelector(".container");
+
+        // STEP 5: Loop to create multiple elements
+        // The loop runs 'quantity' times (user's input)
+        for (let i = 0; i < quantity; i++) {
+          // STEP 6: Create a new div element
+          // This creates: <div></div> (exists in memory, not visible yet)
+          const ele = document.createElement("div");
+
+          // STEP 7: Add the 'circle' class to the element
+          // Now it becomes: <div class="circle"></div>
+          // This applies all the CSS styles defined for .circle class
+          ele.classList.add("circle");
+
+          // OPTIONAL: Add a number inside each circle
+          ele.textContent = i + 1; // Shows 1, 2, 3, etc.
+          ele.style.color = "white";
+          ele.style.fontWeight = "bold";
+          ele.style.fontSize = "20px";
+
+          // STEP 8: Append the element to the container
+          // This adds the element to the DOM, making it visible
+          container.appendChild(ele);
+
+          // The CSS animation (@keyframes popIn) automatically plays
+          // when the element is added to the page
+        }
+
+        // OPTIONAL: Clear the input field after generating
+        // document.querySelector("#quantity").value = '';
+      });
+
+      /*
+      ADDITIONAL DOM MANIPULATION EXAMPLES:
+      --------------------------------------
+
+      // Example 1: Remove all circles
+      function clearCircles() {
+        const container = document.querySelector('.container');
+        container.innerHTML = ''; // Removes all child elements
+      }
+
+      // Example 2: Change circle colors randomly
+      function randomizeColors() {
+        const circles = document.querySelectorAll('.circle');
+        circles.forEach(circle => {
+          const randomColor = `hsl(${Math.random() * 360}, 70%, 60%)`;
+          circle.style.background = randomColor;
+        });
+      }
+
+      // Example 3: Remove a specific circle when clicked
+      container.addEventListener('click', (e) => {
+        if (e.target.classList.contains('circle')) {
+          e.target.remove(); // Removes the clicked circle
+        }
+      });
+
+      // Example 4: Create element with attributes
+      const img = document.createElement('img');
+      img.src = 'image.jpg';
+      img.alt = 'Description';
+      img.classList.add('responsive-image');
+      document.body.appendChild(img);
+
+      // Example 5: Modify existing element
+      const title = document.querySelector('h1');
+      title.textContent = 'New Title'; // Change text
+      title.style.color = 'red'; // Change style
+      title.setAttribute('data-id', '123'); // Add attribute
+
+
+      KEY TAKEAWAYS:
+      --------------
+      ✓ querySelector() finds elements in the DOM
+      ✓ createElement() creates new elements in memory
+      ✓ classList.add() adds CSS classes to elements
+      ✓ appendChild() adds elements to the page
+      ✓ addEventListener() responds to user interactions
+      ✓ .value gets/sets input field values
+      ✓ DOM manipulation allows dynamic, interactive web pages
+      */
+    </script>
+  </body>
+</html>
