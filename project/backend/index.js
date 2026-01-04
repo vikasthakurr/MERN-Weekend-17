@@ -5,6 +5,7 @@ import AuthController from "../backend/controllers/AuthController.js";
 
 const app = express();
 dotenv.config();
+app.use(express.json());
 
 const PORT = process.env.PORT || 3000;
 
