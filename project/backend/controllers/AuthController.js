@@ -3,7 +3,11 @@ import User from "../schema/User.js";
 import mongoose from "mongoose";
 import fs from "fs";
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+import { json } from "stream/consumers";
+import sendMail from "../controllers/MailController.js";
 const AuthController = express();
+
 // import User from "../schema/User.js";
 
 AuthController.post("/register", async (req, res) => {
@@ -36,20 +40,60 @@ AuthController.post("/register", async (req, res) => {
 AuthController.post("/login", async (req, res) => {
   const { email, password } = req.body;
   try {
-    const existingUser = await User.findOne({ email: email });
-    if (!existingUser) return res.status(400).json({ message: "invalid user" });
+    const user = await User.findOne({ email: email });
+    if (!user) {
+      return res.status(400).json({ message: "Invalid credentials :email" });
+    }
 
     //password matching...
-    const isMatch = await bcrypt.compare(password, User.password);
+    const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       return res.status(400).json({ message: "Invalid credentials" });
     }
 
-    // if (!isMatch) return res.status(404).json({ message: "wrong password" });
+    //else assign jwt token....
+    const token = jwt.sign(
+      { id: user._id, email: user.email },
+      process.env.SECRET_KEY,
+      { expiresIn: process.env.JWT_EXPIRES_IN || "1d" }
+    );
 
-    res.status(200).json({ message: "login successful" });
+    //send mail...
+    const subject = "Login Notification";
+    const text = `Hi ${user.username},\n\nThis is a notification that your account was just accessed. If this was you, you can safely ignore this email.`;
+    await sendMail({ to: user.email, subject, text });
+    // LocalStorage.setItem("key", JSON.stringify(token));
+
+    res.status(200).json({
+      message: "Login successful",
+      token,
+    });
   } catch (err) {
-    res.status(404).json({ message: err.message });
+    res.status(500).json({ message: err.message });
+  }
+});
+
+const verifyToken = (req, res, next) => {
+  const authHeader = req.headers.authorization;
+  if (!authHeader)
+    return res.status(401).json({ message: "Authorization header missing" });
+
+  const token = authHeader.split(" ")[1];
+  if (!token) return res.status(401).json({ message: "Token missing" });
+
+  jwt.verify(token, process.env.SECRET_KEY, (err, user) => {
+    if (err) return res.status(403).json({ message: "Invalid token" });
+    req.user = user;
+    next();
+  });
+};
+
+AuthController.get("/profiles", verifyToken, async (req, res) => {
+  try {
+    const users = await User.find({});
+    res.status(200).json(users);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
   }
 });
 export default AuthController;
