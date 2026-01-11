@@ -5,7 +5,7 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 
 const App = () => {
-  //schema defination..
+  //schema definition..
 
   const ValidationSchema = Yup.object({
     name: Yup.string()
