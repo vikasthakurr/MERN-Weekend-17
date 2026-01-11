@@ -20,14 +20,7 @@ const App = () => {
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route
-            path="/cart"
-            element={
-              <ProtectedRoute>
-                <Cart />
-              </ProtectedRoute>
-            }
-          />
+          <Route path="/cart" element={<Cart />} />
           <Route
             path="/profile"
             element={
@@ -46,14 +39,7 @@ const App = () => {
           />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          <Route
-            path="/checkout"
-            element={
-              <ProtectedRoute>
-                <Checkout />
-              </ProtectedRoute>
-            }
-          />
+          <Route path="/checkout" element={<Checkout />} />
         </Routes>
       </div>
     </Router>

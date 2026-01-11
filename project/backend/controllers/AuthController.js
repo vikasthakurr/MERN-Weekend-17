@@ -61,7 +61,7 @@ AuthController.post("/login", async (req, res) => {
     //send mail...
     const subject = "Login Notification";
     const text = `Hi ${user.username},\n\nThis is a notification that your account was just accessed. If this was you, you can safely ignore this email.`;
-    await sendMail({ to: user.email, subject, text });
+    // await sendMail({ to: user.email, subject, text });
     // LocalStorage.setItem("key", JSON.stringify(token));
 
     res.status(200).json({

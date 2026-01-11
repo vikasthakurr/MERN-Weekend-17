@@ -10,8 +10,8 @@ import {
   LogOut,
 } from "lucide-react";
 import { useSelector } from "react-redux";
-import { useSearch } from "../context/SearchContext.jsx";
-import { useAuth } from "../context/AuthContext.jsx";
+import { useSearch } from "../context/SearchContext";
+import { useAuth } from "../context/AuthContext";
 
 const Navbar = () => {
   const [searchFocus, setSearchFocus] = useState(false);
