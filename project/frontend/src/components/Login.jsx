@@ -21,7 +21,7 @@ const Login = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:3000/auth/api/login",
+        "http://localhost:5001/auth/api/login",
         formData
       );
       if (!response) return alert("Invalid credentials");
@@ -34,7 +34,7 @@ const Login = () => {
 
       alert("User logged in successfully");
       navigate("/");
-      console.log(response.data);
+      // console.log(response.data);
     } catch (error) {
       console.log(error);
     }

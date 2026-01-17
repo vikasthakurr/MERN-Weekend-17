@@ -2,7 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cors from "cors";
-import AuthController from "../backend/controllers/AuthController.js";
+import AuthController from "./controllers/AuthController.js";
 
 const app = express();
 dotenv.config();
@@ -22,6 +22,10 @@ mongoose
   });
 
 app.use("/auth/api", AuthController);
+
+app.get("/test", (req, res) => {
+  res.send("test route working");
+});
 
 //dummy route
 app.get("/", (req, res) => {

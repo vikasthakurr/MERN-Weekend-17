@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { clearCart } from "../redux/reducer/CartSlice.js";
 import { CreditCard, Calendar, Lock, CheckCircle, Loader } from "lucide-react";
-import axios from "axios";
 
 const Checkout = () => {
   const cart = useSelector((state) => state.cart);
@@ -35,156 +34,87 @@ const Checkout = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // const handleStripeSubmit = (e) => {
-  //   e.preventDefault();
-  //   setLoading(true);
-
-  //   // Simulate Stripe payment processing
-  //   setTimeout(async () => {
-  //     try {
-  //       const token = localStorage.getItem("token");
-  //       await axios.post(
-  //         "http://localhost:3000/api/orders",
-  //         {
-  //           items: cart.map((item) => ({
-  //             id: item.id,
-  //             title: item.title,
-  //             quantity: item.quantity,
-  //             price: item.price - (item.price * item.discountPercentage) / 100,
-  //             thumbnail: item.thumbnail,
-  //           })),
-  //           totalAmount: total,
-  //           paymentMethod: "stripe",
-  //           paymentStatus: "paid",
-  //         },
-  //         {
-  //           headers: { Authorization: `Bearer ${token}` },
-  //         }
-  //       );
-
-  //       setLoading(false);
-  //       setSuccess(true);
-  //       dispatch(clearCart());
-
-  //       setTimeout(() => {
-  //         navigate("/");
-  //       }, 3000);
-  //     } catch (error) {
-  //       console.error("Error saving order:", error);
-  //       setLoading(false);
-  //       alert(
-  //         "Payment successful but failed to save order details. Please contact support."
-  //       );
-  //     }
-  //   }, 2000);
-  // };
-
-  // const handleRazorpayClick = () => {
-  //   setLoading(true);
-  //   // Simulate opening Razorpay SDK
-  //   setTimeout(() => {
-  //     setLoading(false);
-  //     setShowRazorpayModal(true);
-  //   }, 1000);
-  // };
-
-  // const handleRazorpayPayment = (status) => {
-  //   setShowRazorpayModal(false);
-  //   if (status === "success") {
-  //     setLoading(true);
-  //     setTimeout(async () => {
-  //       try {
-  //         const token = localStorage.getItem("token");
-  //         await axios.post(
-  //           "http://localhost:3000/api/orders",
-  //           {
-  //             items: cart.map((item) => ({
-  //               id: item.id,
-  //               title: item.title,
-  //               quantity: item.quantity,
-  //               price:
-  //                 item.price - (item.price * item.discountPercentage) / 100,
-  //               thumbnail: item.thumbnail,
-  //             })),
-  //             totalAmount: total,
-  //             paymentMethod: "razorpay",
-  //             paymentStatus: "paid",
-  //           },
-  //           {
-  //             headers: { Authorization: `Bearer ${token}` },
-  //           }
-  //         );
-
-  //         setLoading(false);
-  //         setSuccess(true);
-  //         dispatch(clearCart());
-  //         setTimeout(() => {
-  //           navigate("/");
-  //         }, 3000);
-  //       } catch (error) {
-  //         console.error("Error saving order:", error);
-  //         setLoading(false);
-  //         alert(
-  //           "Payment successful but failed to save order details. Please contact support."
-  //         );
-  //       }
-  //     }, 1500);
-  //   } else {
-  //     alert("Payment Failed. Please try again.");
-  //   }
-  // };
-
-  // if (success) {
-  //   return (
-  //     <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
-  //       <div className="bg-white p-8 rounded-2xl shadow-xl text-center max-w-md w-full animate-fade-in-up">
-  //         <div className="bg-green-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
-  //           <CheckCircle className="h-10 w-10 text-green-600" />
-  //         </div>
-  //         <h2 className="text-2xl font-bold text-gray-900 mb-2">
-  //           Payment Successful!
-  //         </h2>
-  //         <p className="text-gray-500 mb-8">
-  //           Thank you for your purchase. You will be redirected to the home page
-  //           shortly.
-  //         </p>
-  //         <div className="w-full bg-gray-200 rounded-full h-1.5 mb-4 overflow-hidden">
-  //           <div className="bg-green-500 h-1.5 rounded-full animate-progress"></div>
-  //         </div>
-  //       </div>
-  //     </div>
-  //   );
-  // }
-
-  // if (cart.length === 0 && !success) {
-  //   return (
-  //     <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-  //       <div className="text-center">
-  //         <h2 className="text-xl font-bold text-gray-900">
-  //           Your cart is empty
-  //         </h2>
-  //         <button
-  //           onClick={() => navigate("/")}
-  //           className="mt-4 text-cyan-600 hover:underline"
-  //         >
-  //           Return to Home
-  //         </button>
-  //       </div>
-  //     </div>
-  //   );
-  // }
-
-  function handleRazorpayClick() {
-    console.log("payment done");
-    dispatch(clearCart());
-    navigate("/");
-  }
   const handleStripeSubmit = (e) => {
     e.preventDefault();
     setLoading(true);
-    dispatch(clearCart());
-    navigate("/");
+
+    // Simulate Stripe payment processing
+    setTimeout(() => {
+      setLoading(false);
+      setSuccess(true);
+      dispatch(clearCart());
+
+      setTimeout(() => {
+        navigate("/");
+      }, 3000);
+    }, 2000);
   };
+
+  const handleRazorpayClick = () => {
+    setLoading(true);
+    // Simulate opening Razorpay SDK
+    setTimeout(() => {
+      setLoading(false);
+      setShowRazorpayModal(true);
+    }, 1000);
+  };
+
+  const handleRazorpayPayment = (status) => {
+    setShowRazorpayModal(false);
+    if (status === "success") {
+      setLoading(true);
+      setTimeout(() => {
+        setLoading(false);
+        setSuccess(true);
+        dispatch(clearCart());
+        setTimeout(() => {
+          navigate("/");
+        }, 3000);
+      }, 1500);
+    } else {
+      alert("Payment Failed. Please try again.");
+    }
+  };
+
+  if (success) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+        <div className="bg-white p-8 rounded-2xl shadow-xl text-center max-w-md w-full animate-fade-in-up">
+          <div className="bg-green-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
+            <CheckCircle className="h-10 w-10 text-green-600" />
+          </div>
+          <h2 className="text-2xl font-bold text-gray-900 mb-2">
+            Payment Successful!
+          </h2>
+          <p className="text-gray-500 mb-8">
+            Thank you for your purchase. You will be redirected to the home page
+            shortly.
+          </p>
+          <div className="w-full bg-gray-200 rounded-full h-1.5 mb-4 overflow-hidden">
+            <div className="bg-green-500 h-1.5 rounded-full animate-progress"></div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (cart.length === 0 && !success) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <h2 className="text-xl font-bold text-gray-900">
+            Your cart is empty
+          </h2>
+          <button
+            onClick={() => navigate("/")}
+            className="mt-4 text-cyan-600 hover:underline"
+          >
+            Return to Home
+          </button>
+        </div>
+      </div>
+    );
+  }
   return (
     <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8 relative">
       <div className="max-w-7xl mx-auto">

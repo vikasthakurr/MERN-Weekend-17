@@ -6,7 +6,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { json } from "stream/consumers";
 import sendMail from "../controllers/MailController.js";
-const AuthController = express();
+const AuthController = express.Router();
 
 // import User from "../schema/User.js";
 
@@ -55,7 +55,7 @@ AuthController.post("/login", async (req, res) => {
     const token = jwt.sign(
       { id: user._id, email: user.email },
       process.env.SECRET_KEY,
-      { expiresIn: process.env.JWT_EXPIRES_IN || "1d" }
+      { expiresIn: process.env.JWT_EXPIRES_IN || "1d" },
     );
 
     //send mail...
@@ -67,6 +67,12 @@ AuthController.post("/login", async (req, res) => {
     res.status(200).json({
       message: "Login successful",
       token,
+      user: {
+        _id: user._id,
+        username: user.username,
+        email: user.email,
+        role: user.role,
+      },
     });
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -96,4 +102,40 @@ AuthController.get("/profiles", verifyToken, async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 });
+
+// Update user endpoint
+AuthController.put("/update-user", verifyToken, async (req, res) => {
+  try {
+    const { username } = req.body;
+    const userId = req.user.id;
+
+    if (!username) {
+      return res.status(400).json({ message: "Username is required" });
+    }
+
+    // Check if new username is already taken by another user
+    const existingUser = await User.findOne({ username });
+    if (existingUser && existingUser._id.toString() !== userId) {
+      return res.status(400).json({ message: "Username is already taken" });
+    }
+
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      { username },
+      { new: true, runValidators: true },
+    ).select("-password"); // Exclude password from result
+
+    if (!updatedUser) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.status(200).json({
+      message: "User updated successfully",
+      user: updatedUser,
+    });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
 export default AuthController;

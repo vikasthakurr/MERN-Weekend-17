@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>DataForge – Client-Side Data Engine</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <style>
+      * {
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+      }
+
+      body {
+        margin: 0;
+        padding: 20px;
+        background: #f4f6fb;
+      }
+
+      h2 {
+        margin-bottom: 5px;
+      }
+
+      .container {
+        max-width: 1100px;
+        margin: auto;
+      }
+
+      .panel {
+        background: #fff;
+        padding: 16px;
+        border-radius: 8px;
+        margin-bottom: 16px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+      }
+
+      input,
+      select,
+      button {
+        padding: 8px;
+        margin-right: 10px;
+      }
+
+      button {
+        cursor: pointer;
+        background: #4f46e5;
+        color: white;
+        border: none;
+        border-radius: 4px;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+      }
+
+      th,
+      td {
+        border: 1px solid #ddd;
+        padding: 6px;
+        font-size: 0.85rem;
+      }
+
+      th {
+        background: #eef1ff;
+        cursor: pointer;
+      }
+
+      canvas {
+        background: #fff;
+        border-radius: 8px;
+        margin-top: 20px;
+      }
+
+      .controls {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <h2>DataForge</h2>
+      <p class="text-muted">
+        Client-Side Data Processing & Visualization Engine
+      </p>
+
+      <!-- Upload -->
+      <div class="panel">
+        <input type="file" id="fileInput" accept=".csv" />
+      </div>
+
+      <!-- Controls -->
+      <div class="panel controls">
+        <select id="columnSelect"></select>
+        <select id="aggregateSelect">
+          <option value="sum">Sum</option>
+          <option value="avg">Average</option>
+          <option value="count">Count</option>
+        </select>
+        <button onclick="aggregate()">Aggregate</button>
+        <button onclick="exportJSON()">Export JSON</button>
+      </div>
+
+      <!-- Table -->
+      <div class="panel">
+        <table id="dataTable"></table>
+      </div>
+
+      <!-- Chart -->
+      <canvas id="chart" width="1000" height="400"></canvas>
+    </div>
+
+    <script>
+      /* =========================
+   GLOBAL STATE
+========================= */
+      let rawData = [];
+      let headers = [];
+      let sortDirection = 1;
+
+      /* =========================
+   FILE HANDLING
+========================= */
+      document.getElementById("fileInput").addEventListener("change", (e) => {
+        const file = e.target.files[0];
+        const reader = new FileReader();
+
+        reader.onload = () => {
+          parseCSV(reader.result);
+          renderTable();
+          populateColumns();
+        };
+
+        reader.readAsText(file);
+      });
+
+      /* =========================
+   CSV PARSER (FROM SCRATCH)
+========================= */
+      function parseCSV(text) {
+        const rows = text.trim().split("\n");
+        headers = rows.shift().split(",");
+
+        rawData = rows.map((row) => {
+          const values = row.split(",");
+          const obj = {};
+          headers.forEach(
+            (h, i) =>
+              (obj[h] = isNaN(values[i]) ? values[i] : Number(values[i]))
+          );
+          return obj;
+        });
+      }
+
+      /* =========================
+   TABLE RENDERING
+========================= */
+      function renderTable() {
+        const table = document.getElementById("dataTable");
+        table.innerHTML = "";
+
+        const thead = document.createElement("thead");
+        const tr = document.createElement("tr");
+
+        headers.forEach((h) => {
+          const th = document.createElement("th");
+          th.innerText = h;
+          th.onclick = () => sortBy(h);
+          tr.appendChild(th);
+        });
+
+        thead.appendChild(tr);
+        table.appendChild(thead);
+
+        const tbody = document.createElement("tbody");
+        rawData.forEach((row) => {
+          const tr = document.createElement("tr");
+          headers.forEach((h) => {
+            const td = document.createElement("td");
+            td.innerText = row[h];
+            tr.appendChild(td);
+          });
+          tbody.appendChild(tr);
+        });
+
+        table.appendChild(tbody);
+      }
+
+      /* =========================
+   SORTING
+========================= */
+      function sortBy(column) {
+        rawData.sort((a, b) => {
+          if (a[column] > b[column]) return sortDirection;
+          if (a[column] < b[column]) return -sortDirection;
+          return 0;
+        });
+        sortDirection *= -1;
+        renderTable();
+      }
+
+      /* =========================
+   AGGREGATION
+========================= */
+      function populateColumns() {
+        const select = document.getElementById("columnSelect");
+        select.innerHTML = "";
+        headers.forEach((h) => {
+          if (typeof rawData[0][h] === "number") {
+            const opt = document.createElement("option");
+            opt.value = h;
+            opt.innerText = h;
+            select.appendChild(opt);
+          }
+        });
+      }
+
+      function aggregate() {
+        const column = document.getElementById("columnSelect").value;
+        const type = document.getElementById("aggregateSelect").value;
+
+        let result;
+        if (type === "sum") {
+          result = rawData.reduce((a, b) => a + b[column], 0);
+        } else if (type === "avg") {
+          result = rawData.reduce((a, b) => a + b[column], 0) / rawData.length;
+        } else {
+          result = rawData.length;
+        }
+
+        drawChart(column, result);
+      }
+
+      /* =========================
+   CANVAS CHART (NO LIBS)
+========================= */
+      function drawChart(label, value) {
+        const canvas = document.getElementById("chart");
+        const ctx = canvas.getContext("2d");
+
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        const barHeight = value * 5;
+
+        ctx.fillStyle = "#4f46e5";
+        ctx.fillRect(200, canvas.height - barHeight - 50, 200, barHeight);
+
+        ctx.fillStyle = "#000";
+        ctx.fillText(label.toUpperCase(), 240, canvas.height - 20);
+        ctx.fillText(value.toFixed(2), 250, canvas.height - barHeight - 60);
+      }
+
+      /* =========================
+   EXPORT
+========================= */
+      function exportJSON() {
+        const data = JSON.stringify(rawData, null, 2);
+        const blob = new Blob([data], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "dataforge.json";
+        a.click();
+      }
+    </script>
+  </body>
+</html>

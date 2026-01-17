@@ -20,13 +20,13 @@ const Signup = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:3000/auth/api/register",
+        "http://localhost:5001/auth/api/register",
         formData
       );
       alert("User registered successfully");
       navigate("/login");
       console.log(response.data);
-      console.log(response.data);
+      // console.log(response.data);
     } catch (error) {
       console.error(error);
       alert(

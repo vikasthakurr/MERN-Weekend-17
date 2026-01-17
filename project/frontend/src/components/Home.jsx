@@ -1,13 +1,32 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import Card from "./Card";
 import products from "../products-api/product.js";
 import { Filter, Grid3x3, LayoutGrid } from "lucide-react";
 import { useSearch } from "../context/SearchContext";
+import { motion } from "framer-motion";
 
 const Home = () => {
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [gridColumns, setGridColumns] = useState(3);
   const { search } = useSearch();
+
+  // Animation State
+  const [titleNumber, setTitleNumber] = useState(0);
+  const titles = useMemo(
+    () => ["Collection", "Quality", "Elegance", "Style", "Comfort"],
+    []
+  );
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      if (titleNumber === titles.length - 1) {
+        setTitleNumber(0);
+      } else {
+        setTitleNumber(titleNumber + 1);
+      }
+    }, 2000);
+    return () => clearTimeout(timeoutId);
+  }, [titleNumber, titles]);
 
   // Get unique categories
   const categories = [
@@ -33,8 +52,32 @@ const Home = () => {
         <div className="absolute inset-0 bg-gradient-to-br from-cyan-50/50 via-transparent to-fuchsia-50/50"></div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative z-10">
           <div className="text-center space-y-4">
-            <h1 className="text-5xl md:text-7xl font-bold bg-gradient-to-r from-gray-900 via-gray-700 to-gray-900 bg-clip-text text-transparent tracking-tight">
-              Premium Collection
+            <h1 className="text-5xl md:text-7xl font-bold bg-gradient-to-r from-gray-900 via-gray-700 to-gray-900 bg-clip-text text-transparent tracking-tight flex flex-col md:block items-center justify-center">
+              <span>Premium</span>
+              <span className="relative flex w-full justify-center overflow-hidden text-center md:inline-flex md:w-auto md:ml-4 h-20 md:h-auto align-top">
+                <span className="invisible">Collection</span>
+                {titles.map((title, index) => (
+                  <motion.span
+                    key={index}
+                    className="absolute font-bold bg-gradient-to-r from-cyan-600 to-fuchsia-600 bg-clip-text text-transparent top-0 left-0 w-full"
+                    initial={{ opacity: 0, y: "-100%" }}
+                    transition={{ type: "spring", stiffness: 50 }}
+                    animate={
+                      titleNumber === index
+                        ? {
+                            y: 0,
+                            opacity: 1,
+                          }
+                        : {
+                            y: titleNumber > index ? -100 : 100,
+                            opacity: 0,
+                          }
+                    }
+                  >
+                    {title}
+                  </motion.span>
+                ))}
+              </span>
             </h1>
             <p className="text-xl text-gray-500 max-w-2xl mx-auto font-light">
               Discover our curated selection of high-quality products defined by
